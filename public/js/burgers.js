@@ -42,7 +42,6 @@ $(function() {
       event.preventDefault();
   
       var updatedburger = {
-        author: $("#auth").val().trim(),
         burger: $("#quo").val().trim()
       };
   
