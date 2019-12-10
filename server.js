@@ -33,7 +33,7 @@ connection.connect(function (err) {
 // Serve index.handlebars to the root route.
 app.get("/", function (req, res) {
   console.log('test')
-  connection.query("SELECT * FROM burgers_db;", function (err, data) {
+  connection.query("SELECT * FROM burgers;", function (err, data) {
     if (err) {
       return res.status(500).end();
     }
