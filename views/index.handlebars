@@ -2,5 +2,40 @@
     
 <img src="assets/img/hamburger.jpg" alt="">
 </div>
-<input type="text">
+<form class="create-burger">
+
+<input type="text" id="burg">
 <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div class="row">
+    
+
+<div class="card col">
+    <div class="card-body">
+        <h4 class="card-title">Uneaten</h4>
+        <p class="card-text">Burgers you have yet to eat</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        {{#each burgers}}
+        {{#unless devoured}}
+        <li class="list-group-item">{{this.burger_name}}</li>
+        <a name="" id="" class="btn btn-primary delburger" data-id="{{this.id}}" role="button">Devour</a>
+        {{/unless}}
+        {{/each}}
+    </ul>
+</div>
+
+<div class="card col">
+    <div class="card-body">
+        <h4 class="card-title">Eaten</h4>
+        <p class="card-text">Burgers that have already been devoured</p>
+    </div>
+        {{#each burgers}}
+        {{#if devoured}}
+        <li class="list-group-item">{{this.burger_name}}</li>
+        {{/if}}
+        {{/each}}
+    </ul>
+</div>
+</div>
