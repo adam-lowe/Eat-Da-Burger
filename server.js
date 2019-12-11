@@ -36,13 +36,12 @@ app.get("/", function (req, res) {
     if (err) {
       return res.status(500).end();
     }
-
     res.render("index", { burgers: data });
   });
 });
 
 app.post("/api/burgers", function (req, res) {
-  connection.query("INSERT INTO burgers (author, burger) VALUES (?, ?)", [req.body.author, req.body.burger], function (
+  connection.query("INSERT INTO burgers (burger_name) VALUES (?)", [req.body.burger], function (
     err,
     result
   ) {
@@ -56,9 +55,10 @@ app.post("/api/burgers", function (req, res) {
   });
 });
 
-app.delete("/api/burgers/:id", function (req, res) {
-  connection.query("DELETE FROM burgers WHERE id = ?", [req.params.id], function (err, result) {
+app.put("/api/burgers/:id", function (req, res) {
+  connection.query("UPDATE burgers SET devoured = 1 WHERE id = ?", [req.params.id], function (err, result) {
     if (err) {
+      console.log(connection.query("UPDATE burgers SET devoured = 1 WHERE id = ?", [req.params.id], function (err, result) {}).sql);
       // If an error occurred, send a generic server failure
       return res.status(500).end();
     }
@@ -69,26 +69,6 @@ app.delete("/api/burgers/:id", function (req, res) {
     res.status(200).end();
 
   });
-});
-
-// Update a burger by an id and then redirect to the root route.
-app.put("/api/burgers/:id", function (req, res) {
-  connection.query(
-    "UPDATE burgers SET author = ?, burger = ? WHERE id = ?",
-    [req.body.author, req.body.burger, req.params.id],
-    function (err, result) {
-      if (err) {
-        // If an error occurred, send a generic server failure
-        return res.status(500).end();
-      }
-      else if (result.changedRows === 0) {
-        // If no rows were changed, then the ID must not exist, so 404
-        return res.status(404).end();
-      }
-      res.status(200).end();
-
-    }
-  );
 });
 
 // Start our server so that it can begin listening to client requests.
